@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reelio · movie finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-row">
+                    <h1 class="header-logo">🎞️ reelio</h1>
+                    
+                    <div class="header-tools">
+                        <!-- theme switcher -->
+                        <button class="icon-btn" id="themeBtn">
+                            <span class="theme-icon-light">☀️</span>
+                            <span class="theme-icon-dark">🌙</span>
+                        </button>
+                        
+                        <!-- favorites button -->
+                        <button class="icon-btn" id="favsBtn">
+                            <span>❤️</span>
+                            <span class="badge" id="favBadge">0</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- search -->
+                <div class="search">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="search movies..." 
+                        class="search-field"
+                    />
+                    <button id="searchBtn" class="search-btn">🔍</button>
+                </div>
+                
+                <!-- filters -->
+                <div class="filters">
+                    <button class="filter filter-active" data-type="popular">🔥 Popular</button>
+                    <button class="filter" data-type="now_playing">🎬 Now playing</button>
+                    <button class="filter" data-type="top_rated">⭐ Top rated</button>
+                    <button class="filter" data-type="upcoming">📅 Upcoming</button>
+                    <button class="filter" data-type="favorites">❤️ Favorites</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- main content -->
+        <main class="main">
+            <div class="container">
+                <!-- movies grid -->
+                <div id="grid" class="grid">
+                        <div class="movie-card">
+                            <img src="https://picsum.photos/300/450" class="movie-poster">
+                            
+                            <div class="movie-info">
+                                <h3 class="movie-title">Movie Title</h3>
+                                
+                                <div class="movie-meta">
+                                    <span class="rating">⭐ 8.2</span>
+                                    <button class="fav-icon">🤍</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movie-card">
+                            <img src="https://picsum.photos/300/451" class="movie-poster">
+                            
+                            <div class="movie-info">
+                                <h3 class="movie-title">Another Movie</h3>
+                                
+                                <div class="movie-meta">
+                                    <span class="rating">⭐ 7.9</span>
+                                    <button class="fav-icon">🤍</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                
+                <!-- loading -->
+                <div id="loader" class="loader hidden">
+                    <div class="spinner"></div>
+                    <p>loading more...</p>
+                </div>
+                
+                <!-- end message -->
+                <div id="end" class="end-message hidden">
+                    <p>no more movies ✌️</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- modal -->
+        <div id="modal" class="modal hidden">
+            <div class="modal-inner" id="modalBody"></div>
+        </div>
+        <!-- favorites sidebar -->
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-head">
+                <h2>❤️ your list</h2>
+                <button id="closeSidebar" class="close">&times;</button>
+            </div>
+            <div id="favList" class="sidebar-list">
+                <!-- mock data -->
+                <div class="fav-item">
+                    <img src="https://picsum.photos/80/120" alt="movie">
+                
+                    <div class="fav-item-info">
+                        <h4>Interstellar</h4>
+                        <p>⭐ 8.7</p>
+                    </div>
+                
+                    <button class="remove-fav">✖</button>
+                </div>
+                
+                <div class="fav-item">
+                    <img src="https://picsum.photos/81/120" alt="movie">
+                
+                    <div class="fav-item-info">
+                        <h4>Inception</h4>
+                        <p>⭐ 8.8</p>
+                    </div>
+                
+                    <button class="remove-fav">✖</button>
+                </div>
+                
+                <div class="fav-item">
+                    <img src="https://picsum.photos/82/120" alt="movie">
+                
+                    <div class="fav-item-info">
+                        <h4>The Dark Knight</h4>
+                        <p>⭐ 9.0</p>
+                    </div>
+                
+                    <button class="remove-fav">✖</button>
+                </div>
+                 <!-- end mockdata -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
