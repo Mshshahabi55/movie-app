@@ -7,7 +7,8 @@ export const store = {
     more: true,
     movies: [],
     favs: [],
-    theme: "dark"
+    theme: "dark",
+    searchHistory:[]
 };
 
 export const dom = {};
@@ -21,9 +22,17 @@ export function cacheDom() {
     dom.closeSide = document.getElementById("closeSidebar");
     dom.favList = document.getElementById("favList");
     dom.favBadge = document.getElementById("favBadge");
+    
     dom.modal = document.getElementById("modal");
     dom.modalBody = document.getElementById("modalBody");
     dom.loader = document.getElementById("loader");
     dom.endMsg = document.getElementById("end");
     dom.filters = document.querySelectorAll(".filter");
+    dom.historyBtn = document.getElementById("historyBtn");
+    dom.historyBadge = document.getElementById("history-badge");
+    dom.historyDropdown = document.getElementById("historyDropdown");
+    dom.historyList = document.getElementById("historyList");
+    dom.clearHistoryBtn = document.getElementById("clearHistoryBtn");
+    dom.historySidebar = document.getElementById("historySidebar");
+    dom.historySidebarList = document.getElementById("historySidebarList");
 }

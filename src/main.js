@@ -5,11 +5,12 @@ import { showMovies } from "./ui/movies.js";
 import { openModal, closeModal } from "./ui/modal.js";
 import { openSidebar, closeSidebar, renderSidebar } from "./ui/sidebar.js";
 import { fetchMovies, searchMovies } from "./api/api.js";
+import { searchHistoryManager } from "./services/SearchHistoryManager.js"
 
-async function loadMovies(reset=false){
+async function loadMoviesPages(reset=false){
     if(store.loading) return;
-    if(reset){ store.page=1; store.more=true; if(dom.endMsg) dom.endMsg.classList.add("hidden"); }
-    if(!store.more){ if(dom.endMsg) dom.endMsg.classList.remove("hidden"); return; }
+    if(reset){ store.page=1; store.hasMorePages=true; if(dom.endMsg) dom.endMsg.classList.add("hidden"); }
+    if(!store.hasMorePages){ if(dom.endMsg) dom.endMsg.classList.remove("hidden"); return; }
 
     store.loading=true;
     if(dom.loader) dom.loader.classList.remove("hidden");
@@ -19,7 +20,7 @@ async function loadMovies(reset=false){
         if(store.query) moviesData = await searchMovies(store.query, store.page);
         else if(store.filter==="favorites"){
             store.movies = store.favs;
-            store.more = false;
+            store.hasMorePages = false;
             showMovies(store.favs,false);
             store.loading=false;
             if(dom.loader) dom.loader.classList.add("hidden");
@@ -29,13 +30,13 @@ async function loadMovies(reset=false){
         else moviesData = await fetchMovies(`/movie/${store.filter}`,store.page);
         // console.log(moviesData);
         store.total=moviesData.total_pages;
-        store.more=store.page<store.total;
+        store.hasMorePages=store.page<store.total;
 
         if(reset) store.movies=moviesData.results;
         else store.movies=[...store.movies,...moviesData.results];
 
         showMovies(moviesData.results,!reset);
-        if(!store.more && dom.endMsg) dom.endMsg.classList.remove("hidden");
+        if(!store.hasMorePages && dom.endMsg) dom.endMsg.classList.remove("hidden");
 
         store.page++;
     }catch(e){
@@ -51,7 +52,7 @@ function resetAndLoad(filter){
     store.filter=filter;
     store.query="";
     dom.searchInp.value="";
-    loadMovies(true);
+    loadMoviesPages(true);
 }
 
 function handleSearch(){
@@ -61,12 +62,15 @@ function handleSearch(){
         resetAndLoad(store.filter === "favorites" ? "favorites" : (store.filter || "popular"));
         return;
     }
+    if(q){
+        searchHistoryManager.addHistory(q);
+    }
     dom.filters.forEach(b=>b.classList.remove("filter-active"));
     store.filter = "";
-    loadMovies(true);
+    loadMoviesPages(true);
 }
 
-window.loadMovies = loadMovies;
+window.loadMoviesPages = loadMoviesPages;
 window.resetAndLoad = resetAndLoad;
 window.handleSearch = handleSearch;
 window.openModal = openModal;
@@ -79,5 +83,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     if(localStorage.getItem("theme")) store.theme=localStorage.getItem("theme");
     document.documentElement.setAttribute("data-theme", store.theme);
     bindEvents();    
-    loadMovies(true);    
+    loadMoviesPages(true);
+    searchHistoryManager.loadHistory();
+    if (dom.historyBadge) dom.historyBadge.textContent = store.searchHistory.length;
 });
