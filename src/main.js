@@ -82,8 +82,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
     //  console.table(store.favs);
     if(localStorage.getItem("theme")) store.theme=localStorage.getItem("theme");
     document.documentElement.setAttribute("data-theme", store.theme);
-    bindEvents();    
+   
     loadMoviesPages(true);
     searchHistoryManager.loadHistory();
+    
     if (dom.historyBadge) dom.historyBadge.textContent = store.searchHistory.length;
+    bindEvents(); 
 });

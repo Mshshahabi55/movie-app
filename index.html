@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>reelio · movie finder</title>
+<title>reelio · movie finder with search history</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,16 +17,34 @@
             <span class="theme-icon-light">☀️</span>
             <span class="theme-icon-dark">🌙</span>
           </button>
+          <button class="icon-btn" id="historyBtn">
+            <span>📜</span>
+            <span class="badge" id="history-badge">0</span>
+          </button>
           <button class="icon-btn" id="favsBtn">
             <span>❤️</span>
             <span class="badge" id="favBadge">0</span>
           </button>
         </div>
       </div>
-      <div class="search">
-        <input type="text" id="searchInput" placeholder="search movies..." class="search-field">
-        <button id="searchBtn" class="search-btn">🔍</button>
+      
+      <!-- Search with history dropdown -->
+      <div class="search-wrapper">
+        <div class="search">
+          <input type="text" id="searchInput" placeholder="search movies..." class="search-field" autocomplete="off">
+          <button id="searchBtn" class="search-btn">🔍</button>
+        </div>
+        
+        <!-- Search history dropdown -->
+        <div id="historyDropdown" class="history-dropdown hidden">
+          <div class="history-header">
+            <span>Recent Searches</span>
+            <button id="clearHistoryBtn" class="clear-history-btn">Clear All</button>
+          </div>
+          <div id="historyList" class="history-list"></div>
+        </div>
       </div>
+      
       <div class="filters">
         <button class="filter filter-active" data-type="popular">🔥 Popular</button>
         <button class="filter" data-type="now_playing">🎬 Now playing</button>
@@ -60,6 +78,14 @@
       <button id="closeSidebar" class="close">&times;</button>
     </div>
     <div id="favList" class="sidebar-list"></div>
+  </div>
+
+  <div id="historySidebar" class="sidebar hidden">
+    <div class="sidebar-head">
+      <h2>📜 search history</h2>
+      <button id="closeHistorySidebar" class="close">&times;</button>
+    </div>
+    <div id="historySidebarList" class="sidebar-list"></div>
   </div>
 </div>
 

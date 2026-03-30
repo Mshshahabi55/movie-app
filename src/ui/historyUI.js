@@ -1,5 +1,6 @@
 import { searchHistoryManager } from "../services/SearchHistoryManager.js";
-import { dom } from "../state/store.js";
+import { cacheDom, store, dom } from "../state/store.js";
+import { bindEvents } from "../events/events.js";
 
 function escapeHtml(str) {
     return String(str)
@@ -28,4 +29,6 @@ export function renderHistoryDropdown() {
     `).join("");
 
     dom.historyDropdown?.classList.remove("hidden");
+    cacheDom();     
+    bindEvents();   
 }
